@@ -11,14 +11,66 @@
     integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
     crossorigin="anonymous"
     referrerpolicy="no-referrer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@200;400;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header>
+    <div class="container">
+      <div class="row">
+        <div class="column-full">
+          <p class="code-journal">Code Journal</p>
+        </div>
+      </div>
+    </div>
   </header>
   <main>
+    <div data-view="entry-form">
+      <form>
+        <div class="container">
+          <div class="row">
+            <div class="column-full">
+              <p class="new-entry-title">New Entry</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-half">
+              <div class="entry-img">
+                <img class="placeholder" src="images/placeholder-image-square.jpg" alt="placeholder-image-square">
+              </div>
+            </div>
+            <div class="column-half">
+              <label for="title">Title</label>
+              <input type="text" name="title" id="title" required>
+              <label for="photo-url" class="label-margin">Photo URL</label>
+              <input type="url" name="photo" id="photo-url" required>
+            </div>
+          </div>
+          <div class="row label-margin">
+            <div class="column-full">
+              <label for="notes">Notes</label>
+              <textarea name="notes" id="notes" required>
+              </textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="column-half"></div>
+            <div class="column-half">
+              <div class="save-button-div">
+                <button type="submit" class="save-button">SAVE</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </form>
+    </div>
+
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
