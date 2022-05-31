@@ -28,10 +28,10 @@ $form.addEventListener('submit', function (event) {
   data.nextEntryId++;
 
   data.entries.unshift(entry);
+  $entryList.prepend(renderEntry(entry));
+  $render.remove();
   $placeholder.src = 'images/placeholder-image-square.jpg';
   $form.reset();
-
-  window.location.reload();
 
   $entryForm.className = 'hidden';
   $entries.className = 'show';
@@ -42,8 +42,8 @@ document.addEventListener('DOMContentLoaded', function (event) {
   for (var entryIndex = 0; entryIndex < data.entries.length; entryIndex++) {
     var $entry = renderEntry(data.entries[entryIndex]);
     $entryList.appendChild($entry);
-    $render.remove();
   }
+
 });
 
 function renderEntry(entry) {
