@@ -13,26 +13,6 @@ $photoURL.addEventListener('change', function (event) {
   $placeholder.src = $form.elements.photo.value;
 });
 
-// function renderNoEntry() {
-//   var $noEntry = document.createElement('div');
-//   $noEntry.setAttribute('class', 'row exit');
-//   var $noEntryColumn = document.createElement('div');
-//   $noEntryColumn.setAttribute('class', 'column-full');
-//   $noEntry.appendChild($noEntryColumn);
-//   var $paragraph = document.createElement('p');
-//   $paragraph.setAttribute('class', 'no-entries');
-//   $paragraph.textContent = 'No entries have been recorded.';
-//   $noEntryColumn.appendChild($paragraph);
-
-//   return $noEntry;
-// }
-
-// var $entryContainer = document.querySelector('.entry-container');
-// console.log($entryContainer);
-// console.log(renderNoEntry());
-
-// console.log($entryContainer.appendChild(renderNoEntry()));
-
 var $render = document.querySelector('.exit');
 
 $form.addEventListener('submit', function (event) {
