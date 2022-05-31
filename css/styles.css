@@ -123,6 +123,10 @@ input:focus {
   font-family: Catamaran, sans-serif;
 }
 
+.exit {
+  justify-content: center;
+}
+
 .no-entries {
   font-size: 1.5rem;
   font-family: Catamaran, sans-serif;

@@ -3,6 +3,7 @@ var $photoURL = document.querySelector('#photo-url');
 var $placeholder = document.querySelector('.placeholder');
 var $entryForm = document.querySelector('div[data-view="entry-form"]');
 var $entries = document.querySelector('div[data-view="entries"]');
+var $entryList = document.querySelector('#entry-list');
 
 $photoURL.addEventListener('change', function (event) {
   if ($photoURL.value === '') {
@@ -12,8 +13,27 @@ $photoURL.addEventListener('change', function (event) {
   $placeholder.src = $form.elements.photo.value;
 });
 
+// function renderNoEntry() {
+//   var $noEntry = document.createElement('div');
+//   $noEntry.setAttribute('class', 'row exit');
+//   var $noEntryColumn = document.createElement('div');
+//   $noEntryColumn.setAttribute('class', 'column-full');
+//   $noEntry.appendChild($noEntryColumn);
+//   var $paragraph = document.createElement('p');
+//   $paragraph.setAttribute('class', 'no-entries');
+//   $paragraph.textContent = 'No entries have been recorded.';
+//   $noEntryColumn.appendChild($paragraph);
+
+//   return $noEntry;
+// }
+
 // var $entryContainer = document.querySelector('.entry-container');
-// var $noEntry = $entryContainer.prepend(renderNoEntry());
+// console.log($entryContainer);
+// console.log(renderNoEntry());
+
+// console.log($entryContainer.appendChild(renderNoEntry()));
+
+var $render = document.querySelector('.exit');
 
 $form.addEventListener('submit', function (event) {
   event.preventDefault();
@@ -31,19 +51,18 @@ $form.addEventListener('submit', function (event) {
   $placeholder.src = 'images/placeholder-image-square.jpg';
   $form.reset();
 
-  var p = document.querySelector('.exit');
-  p.remove();
+  window.location.reload();
+
   $entryForm.className = 'hidden';
   $entries.className = 'show';
-  window.location.reload();
+
 });
 
-var $entryList = document.querySelector('#entry-list');
 document.addEventListener('DOMContentLoaded', function (event) {
-  // console.log('document.loaded');
   for (var entryIndex = 0; entryIndex < data.entries.length; entryIndex++) {
     var $entry = renderEntry(data.entries[entryIndex]);
     $entryList.appendChild($entry);
+    $render.remove();
   }
 });
 
@@ -108,17 +127,3 @@ $entryButton.addEventListener('click', function (event) {
   $entries.className = 'show';
   $entryForm.className = 'hidden';
 });
-
-// function renderNoEntry() {
-//   var $noEntry = document.createElement('div');
-//   $noEntry.setAttribute('class', 'row no-entry');
-//   var $noEntryColumn = document.createElement('div');
-//   $noEntryColumn.setAttribute('class', 'column-full');
-//   $noEntry.appendChild($noEntryColumn);
-//   var $paragraph = document.createElement('p');
-//   $paragraph.setAttribute('class', 'no-entries');
-//   $paragraph.textContent = 'No entries have been recorded';
-//   $noEntryColumn.appendChild($paragraph);
-
-//   return $noEntry;
-// }
