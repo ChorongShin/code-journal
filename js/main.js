@@ -12,6 +12,9 @@ $photoURL.addEventListener('change', function (event) {
   $placeholder.src = $form.elements.photo.value;
 });
 
+// var $entryContainer = document.querySelector('.entry-container');
+// var $noEntry = $entryContainer.prepend(renderNoEntry());
+
 $form.addEventListener('submit', function (event) {
   event.preventDefault();
 
@@ -27,10 +30,15 @@ $form.addEventListener('submit', function (event) {
   data.entries.unshift(entry);
   $placeholder.src = 'images/placeholder-image-square.jpg';
   $form.reset();
+
+  var p = document.querySelector('.exit');
+  p.remove();
+  $entryForm.className = 'hidden';
+  $entries.className = 'show';
+  window.location.reload();
 });
 
 var $entryList = document.querySelector('#entry-list');
-
 document.addEventListener('DOMContentLoaded', function (event) {
   // console.log('document.loaded');
   for (var entryIndex = 0; entryIndex < data.entries.length; entryIndex++) {
@@ -63,13 +71,13 @@ function renderEntry(entry) {
   $row.setAttribute('class', 'row');
 
   var $columnHalf = document.createElement('div');
-  $columnHalf.setAttribute('class', 'column-half');
+  $columnHalf.setAttribute('class', 'column-half column-top');
 
   var $img = document.createElement('img');
   $img.setAttribute('src', entry.photo);
 
   var $secondColumnHalf = document.createElement('div');
-  $secondColumnHalf.setAttribute('class', 'column-half');
+  $secondColumnHalf.setAttribute('class', 'column-half column-top');
 
   var $title = document.createElement('p');
   $title.setAttribute('class', 'title');
@@ -100,3 +108,17 @@ $entryButton.addEventListener('click', function (event) {
   $entries.className = 'show';
   $entryForm.className = 'hidden';
 });
+
+// function renderNoEntry() {
+//   var $noEntry = document.createElement('div');
+//   $noEntry.setAttribute('class', 'row no-entry');
+//   var $noEntryColumn = document.createElement('div');
+//   $noEntryColumn.setAttribute('class', 'column-full');
+//   $noEntry.appendChild($noEntryColumn);
+//   var $paragraph = document.createElement('p');
+//   $paragraph.setAttribute('class', 'no-entries');
+//   $paragraph.textContent = 'No entries have been recorded';
+//   $noEntryColumn.appendChild($paragraph);
+
+//   return $noEntry;
+// }
