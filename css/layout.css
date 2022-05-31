@@ -18,6 +18,14 @@
   width: 100%;
 }
 
+.column-header {
+  width: 17%;
+}
+
+.show {
+  display: block;
+}
+
 @media screen and (min-width: 768px) {
   .container {
     max-width: 900px;

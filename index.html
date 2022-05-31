@@ -19,22 +19,25 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <header>
+  <header class="page-container">
     <div class="container">
       <div class="row">
-        <div class="column-full">
+        <div class="column-sm-half column-header">
           <p class="code-journal">Code Journal</p>
+        </div>
+        <div class="column-sm-half column-header anchor">
+          <a href="#" class="entry-header">Entries</a>
         </div>
       </div>
     </div>
   </header>
   <main>
-    <div data-view="entry-form">
+    <div data-view="entry-form" class="hidden show">
       <form>
         <div class="container">
           <div class="row">
             <div class="column-full">
-              <p class="new-entry-title">New Entry</p>
+              <p class="entry-title">New Entry</p>
             </div>
           </div>
           <div class="row">
@@ -66,9 +69,24 @@
             </div>
           </div>
         </div>
-
-
       </form>
+    </div>
+
+    <div data-view="entries">
+      <div class="container">
+        <div class="row">
+          <div class="column-half entries-header">
+            <p class="entry-title">Entries</p>
+          </div>
+          <div class="column-half entries-header">
+            <div class="new-anchor">
+              <a href="#" class="new">NEW</a>
+            </div>
+          </div>
+        </div>
+        <ul id="entry-list">
+        </ul>
+      </div>
     </div>
 
   </main>
