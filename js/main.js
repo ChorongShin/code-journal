@@ -47,22 +47,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
 });
 
 function renderEntry(entry) {
-  // <li>
-  //   <div class="row">
-  //     <div class="column-half">
-  //       <img src="https://miro.medium.com/max/1400/1*G0or3nXOtD3vVEvyEbCldQ.png" alt="Ada Lovelace">
-  //     </div>
-  //     <div class="column-half">
-  //       <p class="title">Ada Lovelace</p>
-  //       <p class="notes">Augusta Ada King, Countess of Lovelace was an English mathematician and writier,
-  //         chiefly known for her work on Charles Babbage's propsed mechanical general-purpose computer,
-  //         the Analytical Engine.
-  //         She was the first to recognize that the machine had applications beyond pure calculation, and to
-  //         have published the first algorithm intended to be carried out by such a machine.
-  //       </p>
-  //     </div>
-  //   </div>
-  // </li>
 
   var $entry = document.createElement('li');
 
