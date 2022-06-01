@@ -1,9 +1,8 @@
 var $form = document.querySelector('form');
 var $photoURL = document.querySelector('#photo-url');
 var $placeholder = document.querySelector('.placeholder');
-var $entryForm = document.querySelector('div[data-view="entry-form"]');
-var $entries = document.querySelector('div[data-view="entries"]');
 var $entryList = document.querySelector('#entry-list');
+var $views = document.querySelectorAll('div[data-view]');
 
 $photoURL.addEventListener('change', function (event) {
   if ($photoURL.value === '') {
@@ -29,21 +28,11 @@ $form.addEventListener('submit', function (event) {
 
   data.entries.unshift(entry);
   $entryList.prepend(renderEntry(entry));
-  $render.remove();
+
   $placeholder.src = 'images/placeholder-image-square.jpg';
   $form.reset();
 
-  $entryForm.className = 'hidden';
-  $entries.className = 'show';
-
-});
-
-document.addEventListener('DOMContentLoaded', function (event) {
-  for (var entryIndex = 0; entryIndex < data.entries.length; entryIndex++) {
-    var $entry = renderEntry(data.entries[entryIndex]);
-    $entryList.appendChild($entry);
-  }
-
+  handleView('entries');
 });
 
 function renderEntry(entry) {
@@ -82,12 +71,37 @@ function renderEntry(entry) {
 
 var $newButton = document.querySelector('.new');
 $newButton.addEventListener('click', function (event) {
-  $entryForm.className = 'show';
-  $entries.className = 'hidden';
+  handleView('entry-form');
 });
 
 var $entryButton = document.querySelector('.entry-header');
 $entryButton.addEventListener('click', function (event) {
-  $entries.className = 'show';
-  $entryForm.className = 'hidden';
+  handleView('entries');
 });
+
+document.addEventListener('DOMContentLoaded', function (event) {
+  for (var entryIndex = 0; entryIndex < data.entries.length; entryIndex++) {
+    var $entry = renderEntry(data.entries[entryIndex]);
+    $entryList.appendChild($entry);
+  }
+
+  $render.remove();
+  handleView(data.view);
+
+});
+
+function handleView(viewData) {
+  data.view = viewData;
+  for (var i = 0; i < $views.length; i++) {
+
+    if ($views[i].getAttribute('data-view') === viewData) {
+      viewData = $views[i].getAttribute('data-view');
+      $views[i].className = 'view';
+
+    } else {
+      $views[i].className = 'hidden';
+    }
+
+  }
+
+}
