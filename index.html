@@ -33,13 +33,15 @@
   </header>
   <main>
     <div data-view="entry-form" class="hidden">
-      <form>
-        <div class="container">
-          <div class="row">
-            <div class="column-full">
-              <p class="entry-title">New Entry</p>
-            </div>
+      <div class="container">
+        <div class="row">
+          <div class="column-full">
+            <p class="entry-title">New Entry</p>
           </div>
+        </div>
+      </div>
+      <form class="entry-form">
+        <div class="container">
           <div class="row">
             <div class="column-half">
               <div class="entry-img">
@@ -92,6 +94,17 @@
         <ul id="entry-list">
         </ul>
       </div>
+    </div>
+
+    <div data-view="edit-entry" class="hidden">
+      <div class="container">
+        <div class="row">
+          <div class="column-half entries-header">
+            <p class="entry-title">Edit Entry</p>
+          </div>
+        </div>
+      </div>
+      <form class="edit-form"></form>
     </div>
 
   </main>
