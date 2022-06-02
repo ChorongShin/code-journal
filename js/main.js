@@ -60,13 +60,13 @@ function renderEntry(entry) {
   $secondRow.setAttribute('class', 'row');
 
   var $thirdColumnHalf = document.createElement('div');
-  $thirdColumnHalf.setAttribute('class', 'column-half column-edit');
+  $thirdColumnHalf.setAttribute('class', 'column-two-thirds column-edit');
   var $title = document.createElement('p');
   $title.setAttribute('class', 'title');
   $title.textContent = entry.title;
 
   var $fourthColumnHalf = document.createElement('div');
-  $fourthColumnHalf.setAttribute('class', 'column-half column-edit edit');
+  $fourthColumnHalf.setAttribute('class', 'column-one-third column-edit edit');
 
   var $editSpan = document.createElement('span');
   $editSpan.setAttribute('class', 'edit-style');
@@ -147,16 +147,19 @@ $editForm.addEventListener('submit', function (event) {
   // console.log(entry.notes);
   // replace the dom tree
 
-  var $entries = document.querySelectorAll('li');
-  for (var i = 0; i < $entries.length; i++) {
-    var entryId = $entries[i].getAttribute('data-entry-id');
-    if (entryId === data.editing.entryId) {
-      $entryList.replaceWith(renderEntry(data.editing));
-    }
-  }
-  // $entryList.replaceWith(renderEntry(data.editing));
-  handleView('entries');
+  // var $entries = document.querySelectorAll('li');
+  // for (var i = 0; i < $entries.length; i++) {
+  //   var entryId = $entries[i].getAttribute('data-entry-id');
+  //   console.log(entryId);
+  //   if (entryId === data.editing.entryId) {
+  //     // $entries[i].replaceWith(renderEntry(entry));
+  //     $entryList.replaceWith(renderEntry(data.editing));
+  //   }
 
+  $entryList.replaceWith(renderEntry(data.editing));
+  // This would work but it would not render the rest of entries
+  // Get Two entries in the edit entry form view
+  handleView('entries');
   // var $entries = document.querySelectorAll('li');
 
   // var $images = document.querySelectorAll('.photo-url');

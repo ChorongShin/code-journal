@@ -72,7 +72,6 @@ img {
   height: 402px;
   background-color: white;
   border-radius: 3px;
-  object-fit: cover;
 }
 
 textarea:focus,
@@ -146,7 +145,7 @@ input:focus {
 }
 
 .title {
-  font-size: 1.7rem;
+  font-size: 1.8rem;
   font-family: Catamaran, sans-serif;
   font-weight: bold;
   margin-top: 0;
@@ -167,6 +166,14 @@ input:focus {
 .form-title {
   margin-top: 0;
   margin-bottom: 0.8rem;
+}
+
+.column-two-thirds {
+  width: 75%;
+}
+
+.column-one-third {
+  width: 25%;
 }
 
 @media only screen and (max-width: 576px) {
