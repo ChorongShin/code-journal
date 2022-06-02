@@ -161,15 +161,15 @@ $editForm.addEventListener('submit', function (event) {
 
   var $editedNotes = document.createElement('p');
   $editedNotes.setAttribute('class', 'notes');
-  $editedNotes.textContent = entry.title;
+  $editedNotes.textContent = entry.notes;
 
   for (var i = 0; i < $entries.length; i++) {
     var entryId = $entries[i].getAttribute('data-entry-id');
     if (entryId === data.editing.entryId) {
-      $images[i].replaceWith($editedImage);
-      $titles[i].replaceWith($editedTitle);
-      $notes[i].replaceWith($editedNotes);
-      $entryList.prepend(renderEntry(data.editing));
+      $images[i].replaceWith($images[i].src = entry.photo);
+      $titles[i].replaceWith($titles[i].textContent = entry.title);
+      $notes[i].replaceWith($notes[i].textContent = entry.notes);
+      renderEntry(data.editing);
     }
     handleView('entries');
   }
