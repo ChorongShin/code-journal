@@ -141,52 +141,37 @@ $editForm.addEventListener('submit', function (event) {
   // replace the dom tree
   // replace data model
 
-  // for (var i = 0; i < data.entries.length; i++) {
-  //   if (data.entries[i]) {
-  //     data.entries = entry;
-  //   }
-  // }
-
   // console.log(data.entries);
   // $entryList.replaceWith(renderEditEntry(entry));
   // handleView('entries');
 
-  // var $editSaveButton = document.querySelector('.edit-save-button');
-  // $editSaveButton.addEventListener('click', function (event) {
-  //   handleView('entries');
-
   var $entries = document.querySelectorAll('li');
-
-  // var $images = document.querySelectorAll('.photo-url');
-  // $images.value = $entryForm.elements.photo.value;
-  // var $titles = document.querySelectorAll('.form-title');
-  // $titles.value = $entryForm.elements.title.value;
-  // var $notes = document.querySelectorAll('p.notes');
-  // $notes.value = $entryForm.elements.notes.value;
-  // for (var i = 0; i < $entries.length; i++) {
-  //   if ($entries[i]) {
-  //     console.log($entries[i]);
-  //     $images[i].replaceWith($images[i].value = entry.photo);
-  //     $titles[i].replaceWith($titles[i].value = entry.title);
-  //     $notes[i].replaceWith($notes[i].value = entry.notes);
-  //   }
-  // }
-  handleView('entries');
 
   var $images = document.querySelectorAll('.photo-url');
   var $titles = document.querySelectorAll('p.title');
   var $notes = document.querySelectorAll('p.notes');
 
-  // var closest = event.target.closest('ul > li');
-  // var closestEntryId = Number(closest.getAttribute('data-entry-id'));
-  // console.log(closestEntryId);
+  var $editedImage = document.createElement('img');
+  $editedImage.setAttribute('src', entry.photo);
+  $editedImage.setAttribute('class', 'photo-url');
+
+  var $editedTitle = document.createElement('p');
+  $editedTitle.setAttribute('class', 'title');
+  $editedTitle.textContent = entry.title;
+
+  var $editedNotes = document.createElement('p');
+  $editedNotes.setAttribute('class', 'notes');
+  $editedNotes.textContent = entry.title;
+
   for (var i = 0; i < $entries.length; i++) {
     var entryId = $entries[i].getAttribute('data-entry-id');
-    if (entryId === data.entries[i].entryId) {
-      $images[i].src = entry.photo;
-      $titles[i].textContent = entry.title;
-      $notes[i].textContent = entry.notes;
+    if (entryId === data.editing.entryId) {
+      $images[i].replaceWith($editedImage);
+      $titles[i].replaceWith($editedTitle);
+      $notes[i].replaceWith($editedNotes);
+      $entryList.prepend(renderEntry(data.editing));
     }
+    handleView('entries');
   }
 });
 
