@@ -138,41 +138,64 @@ $editForm.addEventListener('submit', function (event) {
     notes: $editForm.elements.notes.value,
     entryId: data.nextEntryId
   };
-  // replace the dom tree
   // replace data model
-
-  // console.log(data.entries);
-  // $entryList.replaceWith(renderEditEntry(entry));
-  // handleView('entries');
+  data.editing.title = entry.title;
+  data.editing.photo = entry.photo;
+  data.editing.notes = entry.notes;
+  // console.log(data.editing);
+  // console.log(entry.photo);
+  // console.log(entry.notes);
+  // replace the dom tree
 
   var $entries = document.querySelectorAll('li');
-
-  var $images = document.querySelectorAll('.photo-url');
-  var $titles = document.querySelectorAll('p.title');
-  var $notes = document.querySelectorAll('p.notes');
-
-  var $editedImage = document.createElement('img');
-  $editedImage.setAttribute('src', entry.photo);
-  $editedImage.setAttribute('class', 'photo-url');
-
-  var $editedTitle = document.createElement('p');
-  $editedTitle.setAttribute('class', 'title');
-  $editedTitle.textContent = entry.title;
-
-  var $editedNotes = document.createElement('p');
-  $editedNotes.setAttribute('class', 'notes');
-  $editedNotes.textContent = entry.notes;
-
   for (var i = 0; i < $entries.length; i++) {
     var entryId = $entries[i].getAttribute('data-entry-id');
     if (entryId === data.editing.entryId) {
-      $images[i].replaceWith($images[i].src = entry.photo);
-      $titles[i].replaceWith($titles[i].textContent = entry.title);
-      $notes[i].replaceWith($notes[i].textContent = entry.notes);
-      renderEntry(data.editing);
+      $entryList.replaceWith(renderEntry(data.editing));
     }
-    handleView('entries');
   }
+  // $entryList.replaceWith(renderEntry(data.editing));
+  handleView('entries');
+
+  // var $entries = document.querySelectorAll('li');
+
+  // var $images = document.querySelectorAll('.photo-url');
+  // var $titles = document.querySelectorAll('p.title');
+  // var $notes = document.querySelectorAll('p.notes');
+
+  // var $editedImage = document.createElement('img');
+  // $editedImage.setAttribute('src', entry.photo);
+  // $editedImage.setAttribute('class', 'photo-url');
+
+  // var $editedTitle = document.createElement('p');
+  // $editedTitle.setAttribute('class', 'title');
+  // $editedTitle.textContent = entry.title;
+
+  // var $editedNotes = document.createElement('p');
+  // $editedNotes.setAttribute('class', 'notes');
+  // $editedNotes.textContent = entry.notes;
+
+  // renderEntry(data.editing);
+
+  // for (var i = 0; i < $entries.length; i++) {
+  //   var entryId = $entries[i].getAttribute('data-entry-id');
+  //   if (entryId === data.editing.entryId) {
+  //     data.editing.title = entry.title;
+  //     data.editing.photo = entry.photo;
+  //     data.editing.notes = entry.notes;
+  //     $titles[i].replaceWith(data.editing.title);
+  //     console.log($titles[i].replaceWith(data.editing.title));
+  //     $images[i].replaceWith(data.editing.photo);
+  //     console.log($images[i].replaceWith(data.editing.photo));
+  //     $notes[i].replaceWith(data.editing.notes);
+  //     console.log($notes[i].replaceWith(data.editing.notes));
+  //     // $images[i].replaceWith($images[i].src = entry.photo);
+  //     // $titles[i].replaceWith($titles[i].textContent = entry.title);
+  //     // $notes[i].replaceWith($notes[i].textContent = entry.notes);
+  //     renderEntry(data.editing);
+  //   }
+  //   handleView('entries');
+  // }
 });
 
 $entryList.addEventListener('click', function (event) {
