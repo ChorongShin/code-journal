@@ -90,7 +90,8 @@ input:focus {
   justify-content: flex-end;
 }
 
-.save-button {
+.save-button,
+.edit-save-button {
   font-size: 0.9rem;
   padding: 8px 15px;
   background-color: rgb(86, 43, 129);

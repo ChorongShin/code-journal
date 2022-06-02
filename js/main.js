@@ -1,4 +1,4 @@
-var $Entryform = document.querySelector('.entry-form');
+var $entryForm = document.querySelector('.entry-form');
 var $photoURL = document.querySelector('#photo-url');
 var $placeholder = document.querySelector('.placeholder');
 var $entryList = document.querySelector('#entry-list');
@@ -10,18 +10,18 @@ $photoURL.addEventListener('change', function (event) {
     $placeholder.src = 'images/placeholder-image-square.jpg';
     return $placeholder;
   }
-  $placeholder.src = $Entryform.elements.photo.value;
+  $placeholder.src = $entryForm.elements.photo.value;
 });
 
 var $render = document.querySelector('.exit');
 
-$Entryform.addEventListener('submit', function (event) {
+$entryForm.addEventListener('submit', function (event) {
   event.preventDefault();
 
   var entry = {
-    title: $Entryform.elements.title.value,
-    photo: $Entryform.elements.photo.value,
-    notes: $Entryform.elements.notes.value,
+    title: $entryForm.elements.title.value,
+    photo: $entryForm.elements.photo.value,
+    notes: $entryForm.elements.notes.value,
     entryId: data.nextEntryId
   };
 
@@ -32,9 +32,10 @@ $Entryform.addEventListener('submit', function (event) {
   $entryList.prepend(renderEntry(entry));
 
   $placeholder.src = 'images/placeholder-image-square.jpg';
-  $Entryform.reset();
+  $entryForm.reset();
 
   handleView('entries');
+
 });
 
 function renderEntry(entry) {
@@ -50,6 +51,7 @@ function renderEntry(entry) {
 
   var $img = document.createElement('img');
   $img.setAttribute('src', entry.photo);
+  $img.setAttribute('class', 'photo-url');
 
   var $secondColumnHalf = document.createElement('div');
   $secondColumnHalf.setAttribute('class', 'column-half column-top');
@@ -128,25 +130,109 @@ function handleView(viewData) {
 
 }
 
-$entryList.addEventListener('click', function (event) {
+$editForm.addEventListener('submit', function (event) {
   event.preventDefault();
-  editEntry(data.editing);
+  var entry = {
+    title: $editForm.elements.title.value,
+    photo: $editForm.elements.photo.value,
+    notes: $editForm.elements.notes.value,
+    entryId: data.nextEntryId
+  };
+  // replace the dom tree
+  // replace data model
 
+  // for (var i = 0; i < data.entries.length; i++) {
+  //   if (data.entries[i]) {
+  //     data.entries = entry;
+  //   }
+  // }
+
+  // console.log(data.entries);
+  // $entryList.replaceWith(renderEditEntry(entry));
+  // handleView('entries');
+
+  // var $editSaveButton = document.querySelector('.edit-save-button');
+  // $editSaveButton.addEventListener('click', function (event) {
+  //   handleView('entries');
+
+  var $entries = document.querySelectorAll('li');
+
+  // var $images = document.querySelectorAll('.photo-url');
+  // $images.value = $entryForm.elements.photo.value;
+  // var $titles = document.querySelectorAll('.form-title');
+  // $titles.value = $entryForm.elements.title.value;
+  // var $notes = document.querySelectorAll('p.notes');
+  // $notes.value = $entryForm.elements.notes.value;
+  // for (var i = 0; i < $entries.length; i++) {
+  //   if ($entries[i]) {
+  //     console.log($entries[i]);
+  //     $images[i].replaceWith($images[i].value = entry.photo);
+  //     $titles[i].replaceWith($titles[i].value = entry.title);
+  //     $notes[i].replaceWith($notes[i].value = entry.notes);
+  //   }
+  // }
+  handleView('entries');
+
+  var $images = document.querySelectorAll('.photo-url');
+  var $titles = document.querySelectorAll('p.title');
+  var $notes = document.querySelectorAll('p.notes');
+
+  // var closest = event.target.closest('ul > li');
+  // var closestEntryId = Number(closest.getAttribute('data-entry-id'));
+  // console.log(closestEntryId);
+  for (var i = 0; i < $entries.length; i++) {
+    var entryId = $entries[i].getAttribute('data-entry-id');
+    if (entryId === data.entries[i].entryId) {
+      $images[i].src = entry.photo;
+      $titles[i].textContent = entry.title;
+      $notes[i].textContent = entry.notes;
+    }
+  }
 });
 
-function editEntry(editingData) {
-  data.editing = editingData;
+$entryList.addEventListener('click', function (event) {
+  if (event.target.tagName !== 'I') {
+    return;
+  }
+  var closest = event.target.closest('ul > li');
+  var closestEntryId = Number(closest.getAttribute('data-entry-id'));
+  // console.log(typeof closestEntryId);
+
   for (var i = 0; i < data.entries.length; i++) {
-    if (event.target.tagName === 'I') {
-      handleView('edit-entry');
-      var $entry = renderEditEntry(data.entries[i]);
-      $editForm.appendChild($entry);
+    // if (data.entries[i].entryId !== closestEntryId) {
+    //   var exit = renderEditEntry(data.entries[i]);
+    //   console.log(exit);
+    //   $editForm.remove(exit);
+    // }
+    if (data.entries[i].entryId === closestEntryId) {
+      // console.log(typeof data.entries[i].entryId);
+      data.editing = data.entries[i];
+      var edit = renderEditEntry(data.editing);
+      $editForm.appendChild(edit);
+
     }
   }
 
-}
+  handleView('edit-entry');
+
+});
+
+// function editEntry(editingData) {
+//   var $entries = document.querySelectorAll('li');
+//   data.editing = editingData;
+
+//   for (var i = 0; i < $entries.length; i++) {
+//     console.log($entries[i]);
+//     editingData = $entries[i];
+//     handleView('edit-entry');
+//     var $entry = renderEditEntry(data.editing[i]);
+
+//     $editForm.appendChild($entry);
+//   }
+// }
 
 function renderEditEntry(entry) {
+
   var $container = document.createElement('div');
   $container.setAttribute('class', 'container');
 
@@ -221,7 +307,7 @@ function renderEditEntry(entry) {
 
   var $saveButton = document.createElement('button');
   $saveButton.setAttribute('type', 'submit');
-  $saveButton.setAttribute('class', 'save-button');
+  $saveButton.setAttribute('class', 'edit-save-button');
   $saveButton.textContent = 'SAVE';
 
   $container.append($row);
