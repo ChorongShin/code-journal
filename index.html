@@ -35,7 +35,6 @@
     handleView(data.view);
 
       $entryList.addEventListener('click', function (event) {
-        // console.log(event.target);
 
         if (event.target.tagName !== 'I') {
           return;
@@ -61,10 +60,6 @@
             };
 
             data.editFormValues = entry;
-
-            // handleView('entry-form');
-            // $newEntry.className = 'hidden';
-            // $editEntry.className = 'entry-title view';
 
             if (data.editFormValues !== null) {
 
@@ -97,7 +92,6 @@
       data.editing.photo = entry.photo;
       data.editing.notes = entry.notes;
        $entries[i].replaceWith(renderEntry(data.editing));
-      // console.log($entries[i].replaceWith(renderEntry(data.editing)));
       $placeholder.src = 'images/placeholder-image-square.jpg';
       $entryForm.reset();
       data.editing = null;

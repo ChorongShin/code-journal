@@ -108,19 +108,13 @@ $entryForm.addEventListener('submit', function (event) {
   var $entries = document.querySelectorAll('li');
   if (data.editing !== null) {
     for (var i = 0; i < $entries.length; i++) {
-      // console.log('entries', $entries[i]);
+
       var entryId = parseInt($entries[i].getAttribute('data-entry-id'), 10);
       if (entryId === data.editing.entryId) {
-        // console.log(data.editing.entryId);
-        // console.log('data entryId', data.editing.entryId);
-        // console.log(entryId === data.editing.entryId);
 
         data.editing.title = entry.title;
         data.editing.photo = entry.photo;
         data.editing.notes = entry.notes;
-        // console.log('data.editing all', data.editing);
-
-        // console.log($entries[i]);
 
         $entries[i].replaceWith(renderEntry(data.editing));
         // console.log($entries[i].replaceWith(renderEntry(data.editing)));
