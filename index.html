@@ -17,6 +17,99 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
+  <script>
+    var $exit = document.querySelector('.exit');
+
+      var $titleInput = document.querySelector('#title');
+      var $photoInput = document.querySelector('#photo-url');
+      var $notesInput = document.querySelector('#notes');
+      var $placeHolder = document.querySelector('.placeholder');
+  document.addEventListener('DOMContentLoaded', function (event) {
+      for (var entryIndex = 0; entryIndex < data.entries.length; entryIndex++) {
+        var $entry = renderEntry(data.entries[entryIndex]);
+        $entryList.appendChild($entry);
+        handleView('entries');
+      }
+
+      $exit.remove();
+    handleView(data.view);
+
+      $entryList.addEventListener('click', function (event) {
+        // console.log(event.target);
+
+        if (event.target.tagName !== 'I') {
+          return;
+        }
+
+        var closest = event.target.closest('ul > li');
+        var closestEntryId = parseInt(closest.getAttribute('data-entry-id'), 10);
+
+        for (var i = 0; i < data.entries.length; i++) {
+          if (data.entries[i].entryId === closestEntryId) {
+            data.editing = data.entries[i];
+
+            $titleInput.value = data.editing.title;
+            $photoInput.value = data.editing.photo;
+            $notesInput.value = data.editing.notes;
+            $placeHolder.src = data.editing.photo;
+
+            var entry = {
+              title: data.editing.title,
+              photo: data.editing.photo,
+              notes: data.editing.notes,
+              entryId: data.editing.entryId
+            };
+
+            data.editFormValues = entry;
+
+            // handleView('entry-form');
+            // $newEntry.className = 'hidden';
+            // $editEntry.className = 'entry-title view';
+
+            if (data.editFormValues !== null) {
+
+              console.log(data.editFormValues);
+
+              $titleInput.value = data.editFormValues.title;
+              $photoInput.value = data.editFormValues.photo;
+              $notesInput.value = data.editFormValues.notes;
+              $placeHolder.src = data.editFormValues.photo;
+              $newEntry.className = 'hidden';
+              $editEntry.className = 'entry-title view';
+              handleView('entry-form');
+
+            }
+          }
+        }
+      });
+
+
+    if (data.editFormValues !== null) {
+      $titleInput.value = data.editFormValues.title;
+      $photoInput.value = data.editFormValues.photo;
+      $notesInput.value = data.editFormValues.notes;
+      $placeHolder.src = data.editFormValues.photo;
+      $newEntry.className = 'hidden';
+      $editEntry.className = 'entry-title view';
+       handleView('entry-form');
+         data.editFormValues = null;
+          data.editing.title = entry.title;
+      data.editing.photo = entry.photo;
+      data.editing.notes = entry.notes;
+       $entries[i].replaceWith(renderEntry(data.editing));
+      // console.log($entries[i].replaceWith(renderEntry(data.editing)));
+      $placeholder.src = 'images/placeholder-image-square.jpg';
+      $entryForm.reset();
+      data.editing = null;
+      handleView('entries');
+      $newEntry.className = 'entry-title view';
+      $editEntry.className = 'hidden';
+    }
+
+
+
+    });
+  </script>
 </head>
 <body>
   <header class="page-container">

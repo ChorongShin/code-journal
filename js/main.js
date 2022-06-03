@@ -3,7 +3,9 @@ var $photoURL = document.querySelector('#photo-url');
 var $placeholder = document.querySelector('.placeholder');
 var $entryList = document.querySelector('#entry-list');
 var $views = document.querySelectorAll('div[data-view]');
-var $exit = document.querySelector('.exit');
+
+var $newEntry = document.querySelector('.new-entry');
+var $editEntry = document.querySelector('.edit-entry');
 
 $photoURL.addEventListener('change', function (event) {
   if ($photoURL.value === '') {
@@ -78,17 +80,6 @@ $entryButton.addEventListener('click', function (event) {
   handleView('entries');
 });
 
-document.addEventListener('DOMContentLoaded', function (event) {
-  for (var entryIndex = 0; entryIndex < data.entries.length; entryIndex++) {
-    var $entry = renderEntry(data.entries[entryIndex]);
-    $entryList.appendChild($entry);
-  }
-
-  $exit.remove();
-  handleView(data.view);
-
-});
-
 function handleView(viewData) {
   data.view = viewData;
   for (var i = 0; i < $views.length; i++) {
@@ -104,53 +95,6 @@ function handleView(viewData) {
   }
 
 }
-
-var $titleInput = document.querySelector('#title');
-var $photoInput = document.querySelector('#photo-url');
-var $notesInput = document.querySelector('#notes');
-var $placeHolder = document.querySelector('.placeholder');
-var $newEntry = document.querySelector('.new-entry');
-var $editEntry = document.querySelector('.edit-entry');
-
-$entryList.addEventListener('click', function (event) {
-  // console.log(event.target);
-
-  if (event.target.tagName !== 'I') {
-    return;
-  }
-
-  if (event.target) {
-
-    var closest = event.target.closest('ul > li');
-    var closestEntryId = parseInt(closest.getAttribute('data-entry-id'), 10);
-
-    for (var i = 0; i < data.entries.length; i++) {
-      if (data.entries[i].entryId === closestEntryId) {
-        data.editing = data.entries[i];
-
-        $titleInput.value = data.editing.title;
-        $photoInput.value = data.editing.photo;
-        $notesInput.value = data.editing.notes;
-        $placeHolder.src = data.editing.photo;
-
-        $newEntry.className = 'hidden';
-        $editEntry.className = 'entry-title view';
-
-        // var entry = {
-        //   title: data.editing.title,
-        //   photo: data.editing.photo,
-        //   notes: data.editing.notes,
-        //   entryId: data.entryId
-        // };
-        // console.log('entry', entry);
-      }
-      // console.log('data editing 1', data.editing);
-
-    }
-
-    handleView('entry-form');
-  }
-});
 
 $entryForm.addEventListener('submit', function (event) {
   event.preventDefault();
@@ -202,30 +146,3 @@ $entryForm.addEventListener('submit', function (event) {
   }
 
 });
-
-// var $editIcons = document.querySelectorAll('i');
-// for (var i = 0; i < $editIcons.length; i++) {
-//   $editIcons[i].addEventListener('click', function (event) {
-//     console.log(event.target);
-//     var closest = event.target.closest('ul > li');
-//     var closestEntryId = parseInt(closest.getAttribute('data-entry-id'), 10);
-
-//     for (var i = 0; i < data.entries.length; i++) {
-//       if (data.entries[i].entryId === closestEntryId) {
-//         data.editing = data.entries[i];
-
-//         $titleInput.value = data.editing.title;
-//         $photoInput.value = data.editing.photo;
-//         $notesInput.value = data.editing.notes;
-//         $placeHolder.src = data.editing.photo;
-
-//         $newEntry.className = 'hidden';
-//         $editEntry.className = 'entry-title view';
-//       }
-//       console.log('data editing 1', data.editing);
-
-//     }
-
-//     handleView('edit-form');
-//   });
-// }
