@@ -1,4 +1,4 @@
-var $entryForm = document.querySelector('.entry-form');
+var $entryForm = document.querySelector('form');
 var $photoURL = document.querySelector('#photo-url');
 var $placeholder = document.querySelector('.placeholder');
 var $entryList = document.querySelector('#entry-list');
@@ -137,8 +137,7 @@ $entryForm.addEventListener('submit', function (event) {
 
 });
 
-window.addEventListener('DOMContentLoaded', function (event) {
-  event.preventDefault();
+document.addEventListener('DOMContentLoaded', function (event) {
   var $exit = document.querySelector('.exit');
   var $titleInput = document.querySelector('#title');
   var $photoInput = document.querySelector('#photo-url');
