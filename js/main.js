@@ -19,6 +19,43 @@ $photoURL.addEventListener('change', function (event) {
   $placeholder.src = $entryForm.elements.photo.value;
 });
 
+$entryList.addEventListener('click', function (event) {
+  event.preventDefault();
+  if (event.target.tagName !== 'I') {
+    return;
+  }
+
+  var closest = event.target.closest('ul > li');
+  var closestEntryId = parseInt(closest.getAttribute('data-entry-id'), 10);
+
+  for (var i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === closestEntryId) {
+      data.editing = data.entries[i];
+      break;
+    }
+  }
+  $titleInput.value = data.editing.title;
+  $entryForm.elements.title.value = data.editing.title;
+  $entryForm.elements.photo.value = data.editing.photo;
+  $entryForm.elements.notes.value = data.editing.value;
+  $placeholder.src = data.editing.photo;
+
+  if (data.editing !== null) {
+
+    data.editFormValues = data.editing;
+
+    $titleInput.value = data.editFormValues.title;
+    $photoInput.value = data.editFormValues.photo;
+    $notesInput.value = data.editFormValues.notes;
+    $placeholder.src = data.editFormValues.photo;
+
+    $newEntry.className = 'hidden';
+    $editEntry.className = 'entry-title view';
+    handleView('entry-form');
+    data.editFormValues = null;
+  }
+});
+
 $entryForm.addEventListener('submit', function (event) {
   event.preventDefault();
   var entry = {
@@ -41,6 +78,7 @@ $entryForm.addEventListener('submit', function (event) {
 
         $entries[i].replaceWith(renderEntry(data.editing));
         $placeholder.src = 'images/placeholder-image-square.jpg';
+
         data.editing = null;
         $entryForm.reset();
         handleView('entries');
@@ -58,56 +96,13 @@ $entryForm.addEventListener('submit', function (event) {
     data.nextEntryId++;
     handleView('entries');
   }
-
-});
-
-$entryList.addEventListener('click', function (event) {
-  event.preventDefault();
-  if (event.target.tagName !== 'I') {
-    return;
-  }
-
-  var closest = event.target.closest('ul > li');
-  var closestEntryId = parseInt(closest.getAttribute('data-entry-id'), 10);
-
-  for (var i = 0; i < data.entries.length; i++) {
-    if (data.entries[i].entryId === closestEntryId) {
-      data.editing = data.entries[i];
-      // console.log(data.editing);
-
-      $titleInput.value = data.editing.title;
-      // console.log($titleInput);
-      // console.log($titleInput.value);
-      $photoInput.value = data.editing.photo;
-      // console.log($photoInput.value);
-      $notesInput.value = data.editing.notes;
-      $placeholder.src = data.editing.photo;
-
-      var entry = {
-        title: data.editing.title,
-        photo: data.editing.photo,
-        notes: data.editing.notes,
-        entryId: data.editing.entryId
-      };
-
-      data.editFormValues = entry;
-
-      if (data.editFormValues !== null) {
-        $titleInput.value = data.editFormValues.title;
-        $photoInput.value = data.editFormValues.photo;
-        $notesInput.value = data.editFormValues.notes;
-        $placeholder.src = data.editFormValues.photo;
-        data.editFormValues = null;
-        handleView('entry-form');
-        $newEntry.className = 'hidden';
-        $editEntry.className = 'entry-title view';
-
-      }
-    }
-  }
 });
 
 $newButton.addEventListener('click', function (event) {
+  $editEntry.className = 'hidden';
+  $newEntry.className = 'entry-title view';
+  $placeholder.src = 'images/placeholder-image-square.jpg';
+  $entryForm.reset();
   handleView('entry-form');
 });
 
@@ -116,7 +111,11 @@ $entryButton.addEventListener('click', function (event) {
 });
 
 window.addEventListener('DOMContentLoaded', function (event) {
-  // var $exit = document.querySelector('.no-entries');
+  for (var entryIndex = 0; entryIndex < data.entries.length; entryIndex++) {
+    var $entry = renderEntry(data.entries[entryIndex]);
+    $entryList.appendChild($entry);
+    handleView(data.view);
+  }
 
   if (data.view === 'entry-form' && data.editing !== null) {
     $titleInput.value = data.editing.title;
@@ -134,17 +133,6 @@ window.addEventListener('DOMContentLoaded', function (event) {
     $editEntry.className = 'hidden';
     handleView('entry-form');
   }
-
-  if (data.view === 'entries') {
-    for (var entryIndex = 0; entryIndex < data.entries.length; entryIndex++) {
-      var $entry = renderEntry(data.entries[entryIndex]);
-      $entryList.appendChild($entry);
-      // $exit.remove();
-      handleView('entries');
-    }
-  }
-
-  // handleView(data.view);
 
 });
 
@@ -207,11 +195,8 @@ function handleView(viewData) {
   data.view = viewData;
   for (var i = 0; i < $views.length; i++) {
     if ($views[i].getAttribute('data-view') === viewData) {
-      // console.log($views[i].getAttribute('data-view') === viewData);
       viewData = $views[i].getAttribute('data-view');
-      // console.log(viewData);
       $views[i].className = 'view';
-      // console.log($views[i]);
     } else {
       $views[i].className = 'hidden';
     }
