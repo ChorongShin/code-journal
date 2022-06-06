@@ -17,6 +17,9 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
+  <script>
+
+  </script>
 </head>
 <body>
   <header class="page-container">
@@ -26,20 +29,23 @@
           <p class="code-journal">Code Journal</p>
         </div>
         <div class="column-sm-half column-header anchor">
-          <a href="#" class="entry-header">Entries</a>
+          <a href="#" class="view-entries entry-header">Entries</a>
         </div>
       </div>
     </div>
   </header>
   <main>
     <div data-view="entry-form" class="hidden">
-      <form>
-        <div class="container">
-          <div class="row">
-            <div class="column-full">
-              <p class="entry-title">New Entry</p>
-            </div>
+      <div class="container">
+        <div class="row">
+          <div class="column-full">
+            <p class="new-entry entry-title view">New Entry</p>
+            <p class="edit-entry entry-title hidden">Edit Entry</p>
           </div>
+        </div>
+      </div>
+      <form id="form">
+        <div class="container">
           <div class="row">
             <div class="column-half">
               <div class="entry-img">
@@ -72,7 +78,7 @@
       </form>
     </div>
 
-    <div data-view="entries">
+    <div data-view="entries" class="view">
       <div class="container">
         <div class="row">
           <div class="column-half entries-header">
@@ -84,16 +90,10 @@
             </div>
           </div>
         </div>
-        <div class="row exit">
-          <div class="column-full">
-            <p class="no-entries">No entries have been recorded.</p>
-          </div>
-        </div>
         <ul id="entry-list">
         </ul>
       </div>
     </div>
-
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
