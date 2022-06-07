@@ -106,7 +106,6 @@ $entryForm.addEventListener('submit', function (event) {
 });
 
 $deleteButton.addEventListener('click', function (event) {
-  // console.log('working');
   $overlay.className = 'overlay on';
   $modal.className = 'modal view';
 });
@@ -125,29 +124,24 @@ $entryButton.addEventListener('click', function (event) {
 });
 
 $cancelButton.addEventListener('click', function (event) {
-  // console.log('working');
+
   $overlay.className = 'overlay';
   $modal.className = 'modal hidden';
 });
 
 $confirmButton.addEventListener('click', function (event) {
-  // console.log('working');
 
   var $entries = document.querySelectorAll('li');
   for (var i = 0; i < $entries.length; i++) {
     var entryId = parseInt($entries[i].getAttribute('data-entry-id'), 10);
     if (data.editing.entryId === entryId) {
-      // console.log(data.editing.entryId);
-      // console.log(entryId);
-      // console.log(data.editing.entryId === entryId);
+
       var entry = $entries[i];
-      data.entries.splice(entryId - 1, 1);
+      data.entries.splice(entryId - data.entries.length, 1);
       data.editing = null;
       if (data.nextEntryId > 0) {
         data.nextEntryId--;
       }
-      // console.log(data.nextEntryId);
-      // console.log(data.entries);
       entry.remove();
       break;
     }
@@ -165,29 +159,13 @@ window.addEventListener('DOMContentLoaded', function (event) {
     handleView(data.view);
   }
 
-  // var entryButton = event.target.className = 'confirm-button';
-  // console.log(entry);
-
-  if (event.target.className === 'confirm-button') {
-    var $entries = document.querySelectorAll('li');
-    for (var i = 0; i < $entries.length; i++) {
-      var entryId = parseInt($entries[i].getAttribute('data-entry-id'), 10);
-      if (entryId === data.entries[i].entryId) {
-        var entry = $entries[i];
-        data.entries.splice(entryId - 1, 1);
-        data.editing = null;
-        data.nextEntryId--;
-        entry.remove();
-        break;
-      }
-    }
-  }
   if (data.view === 'entry-form' && data.editing !== null) {
     $titleInput.value = data.editing.title;
     $photoInput.value = data.editing.photo;
     $notesInput.value = data.editing.notes;
     $placeholder.src = data.editing.photo;
 
+    data.editing = null;
     $deleteButton.className = 'delete view';
     $editEntry.className = 'entry-title view';
     $newEntry.className = 'hidden';
