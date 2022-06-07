@@ -10,6 +10,11 @@ var $photoInput = document.querySelector('#photo-url');
 var $notesInput = document.querySelector('#notes');
 var $entryButton = document.querySelector('.view-entries');
 var $newButton = document.querySelector('.new');
+var $deleteButton = document.querySelector('button.delete');
+var $cancelButton = document.querySelector('.cancel-button');
+var $confirmButton = document.querySelector('.confirm-button');
+var $overlay = document.querySelector('.overlay');
+var $modal = document.querySelector('.modal');
 
 $photoURL.addEventListener('change', function (event) {
   if ($photoURL.value === '') {
@@ -51,6 +56,7 @@ $entryList.addEventListener('click', function (event) {
 
     $newEntry.className = 'hidden';
     $editEntry.className = 'entry-title view';
+    $deleteButton.className = 'delete view';
     handleView('entry-form');
     data.editFormValues = null;
   }
@@ -70,6 +76,7 @@ $entryForm.addEventListener('submit', function (event) {
     for (var i = 0; i < $entries.length; i++) {
 
       var entryId = parseInt($entries[i].getAttribute('data-entry-id'), 10);
+
       if (entryId === data.editing.entryId) {
 
         data.editing.title = entry.title;
@@ -98,15 +105,50 @@ $entryForm.addEventListener('submit', function (event) {
   }
 });
 
+$deleteButton.addEventListener('click', function (event) {
+  $overlay.className = 'overlay on';
+  $modal.className = 'modal view';
+});
+
 $newButton.addEventListener('click', function (event) {
   $editEntry.className = 'hidden';
   $newEntry.className = 'entry-title view';
   $placeholder.src = 'images/placeholder-image-square.jpg';
+  $deleteButton.className = 'hidden';
   $entryForm.reset();
   handleView('entry-form');
 });
 
 $entryButton.addEventListener('click', function (event) {
+  handleView('entries');
+});
+
+$cancelButton.addEventListener('click', function (event) {
+
+  $overlay.className = 'overlay';
+  $modal.className = 'modal hidden';
+});
+
+$confirmButton.addEventListener('click', function (event) {
+
+  var $entries = document.querySelectorAll('li');
+  for (var i = 0; i < $entries.length; i++) {
+    var entryId = parseInt($entries[i].getAttribute('data-entry-id'), 10);
+    if (data.editing.entryId === entryId) {
+
+      var entry = $entries[i];
+      data.entries.splice(entryId - data.entries.length, 1);
+      data.editing = null;
+      if (data.nextEntryId > 0) {
+        data.nextEntryId--;
+      }
+      entry.remove();
+      break;
+    }
+  }
+
+  $overlay.className = 'overlay hidden';
+  $modal.className = 'modal hidden';
   handleView('entries');
 });
 
@@ -123,6 +165,8 @@ window.addEventListener('DOMContentLoaded', function (event) {
     $notesInput.value = data.editing.notes;
     $placeholder.src = data.editing.photo;
 
+    data.editing = null;
+    $deleteButton.className = 'delete view';
     $editEntry.className = 'entry-title view';
     $newEntry.className = 'hidden';
     handleView('entry-form');
@@ -195,7 +239,6 @@ function handleView(viewData) {
   data.view = viewData;
   for (var i = 0; i < $views.length; i++) {
     if ($views[i].getAttribute('data-view') === viewData) {
-      viewData = $views[i].getAttribute('data-view');
       $views[i].className = 'view';
     } else {
       $views[i].className = 'hidden';

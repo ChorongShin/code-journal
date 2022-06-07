@@ -22,6 +22,7 @@
   </script>
 </head>
 <body>
+  <div class="overlay"></div>
   <header class="page-container">
     <div class="container">
       <div class="row">
@@ -66,16 +67,40 @@
               </textarea>
             </div>
           </div>
-          <div class="row">
-            <div class="column-half"></div>
+          <div class="row buttons">
             <div class="column-half">
-              <div class="save-button-div">
-                <button type="submit" class="save-button">SAVE</button>
+              <div class="delete-button-div">
+                <button type="button" class="delete hidden">Delete Entry</button>
               </div>
             </div>
+            <div class="column-half">
+              <div class="save-button-div">
+                <button class="save-button">SAVE</button>
+              </div>
+            </div>
+
+
           </div>
         </div>
       </form>
+    </div>
+
+    <div class="modal hidden">
+      <div class="open-modal">
+        <div class="row">
+          <div class="column-full">
+            <p class="question">Are you sure you want to delete this entry?</p>
+          </div>
+        </div>
+        <div class="row cancel-confirm">
+          <div class="column-half cancel">
+            <button type="button" class="cancel-button">CANCEL</button>
+          </div>
+          <div class="column-half confirm">
+            <button type="button" class="confirm-button">CONFIRM</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div data-view="entries" class="view">
