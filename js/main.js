@@ -16,6 +16,50 @@ var $confirmButton = document.querySelector('.confirm-button');
 var $overlay = document.querySelector('.overlay');
 var $modal = document.querySelector('.modal');
 
+// Submit form
+$entryForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  var entry = {
+    title: $entryForm.elements.title.value,
+    photo: $entryForm.elements.photo.value,
+    notes: $entryForm.elements.notes.value,
+    entryId: data.nextEntryId
+  };
+
+  var $entries = document.querySelectorAll('li');
+  if (data.editing !== null) {
+    for (var i = 0; i < $entries.length; i++) {
+
+      var entryId = parseInt($entries[i].getAttribute('data-entry-id'), 10);
+
+      if (entryId === data.editing.entryId) {
+
+        data.editing.title = entry.title;
+        data.editing.photo = entry.photo;
+        data.editing.notes = entry.notes;
+
+        $entries[i].replaceWith(renderEntry(data.editing));
+        $placeholder.src = 'images/placeholder-image-square.jpg';
+
+        data.editing = null;
+        $entryForm.reset();
+        handleView('entries');
+        $newEntry.className = 'entry-title view';
+        $editEntry.className = 'hidden';
+      }
+    }
+  } else if (data.editing === null) {
+    data.nextEntryId++;
+    data.entries.unshift(entry);
+
+    $entryList.prepend(renderEntry(entry));
+    $placeholder.src = 'images/placeholder-image-square.jpg';
+    $entryForm.reset();
+    handleView('entries');
+  }
+});
+
+// Change photo's by its value
 $photoURL.addEventListener('change', function (event) {
   if ($photoURL.value === '') {
     $placeholder.src = 'images/placeholder-image-square.jpg';
@@ -24,6 +68,7 @@ $photoURL.addEventListener('change', function (event) {
   $placeholder.src = $entryForm.elements.photo.value;
 });
 
+// Edit entry list
 $entryList.addEventListener('click', function (event) {
   event.preventDefault();
   if (event.target.tagName !== 'I') {
@@ -62,54 +107,13 @@ $entryList.addEventListener('click', function (event) {
   }
 });
 
-$entryForm.addEventListener('submit', function (event) {
-  event.preventDefault();
-  var entry = {
-    title: $entryForm.elements.title.value,
-    photo: $entryForm.elements.photo.value,
-    notes: $entryForm.elements.notes.value,
-    entryId: data.nextEntryId
-  };
-
-  var $entries = document.querySelectorAll('li');
-  if (data.editing !== null) {
-    for (var i = 0; i < $entries.length; i++) {
-
-      var entryId = parseInt($entries[i].getAttribute('data-entry-id'), 10);
-
-      if (entryId === data.editing.entryId) {
-
-        data.editing.title = entry.title;
-        data.editing.photo = entry.photo;
-        data.editing.notes = entry.notes;
-
-        $entries[i].replaceWith(renderEntry(data.editing));
-        $placeholder.src = 'images/placeholder-image-square.jpg';
-
-        data.editing = null;
-        $entryForm.reset();
-        handleView('entries');
-        $newEntry.className = 'entry-title view';
-        $editEntry.className = 'hidden';
-      }
-    }
-  } else if (data.editing === null) {
-
-    data.entries.unshift(entry);
-
-    $entryList.prepend(renderEntry(entry));
-    $placeholder.src = 'images/placeholder-image-square.jpg';
-    $entryForm.reset();
-    data.nextEntryId++;
-    handleView('entries');
-  }
-});
-
+// Delete button in the edit form
 $deleteButton.addEventListener('click', function (event) {
   $overlay.className = 'overlay on';
   $modal.className = 'modal view';
 });
 
+// New button for the new form
 $newButton.addEventListener('click', function (event) {
   $editEntry.className = 'hidden';
   $newEntry.className = 'entry-title view';
@@ -119,37 +123,15 @@ $newButton.addEventListener('click', function (event) {
   handleView('entry-form');
 });
 
+// Click entry button to see the entry page
 $entryButton.addEventListener('click', function (event) {
   handleView('entries');
 });
 
+// Cancel button in the edit form page
 $cancelButton.addEventListener('click', function (event) {
-
   $overlay.className = 'overlay';
   $modal.className = 'modal hidden';
-});
-
-$confirmButton.addEventListener('click', function (event) {
-
-  var $entries = document.querySelectorAll('li');
-  for (var i = 0; i < $entries.length; i++) {
-    var entryId = parseInt($entries[i].getAttribute('data-entry-id'), 10);
-    if (data.editing.entryId === entryId) {
-
-      var entry = $entries[i];
-      data.entries.splice(entryId - data.entries.length, 1);
-      data.editing = null;
-      if (data.nextEntryId > 0) {
-        data.nextEntryId--;
-      }
-      entry.remove();
-      break;
-    }
-  }
-
-  $overlay.className = 'overlay hidden';
-  $modal.className = 'modal hidden';
-  handleView('entries');
 });
 
 window.addEventListener('DOMContentLoaded', function (event) {
@@ -180,8 +162,8 @@ window.addEventListener('DOMContentLoaded', function (event) {
 
 });
 
+// Function for rendring an entry
 function renderEntry(entry) {
-
   var $entry = document.createElement('li');
   $entry.setAttribute('data-entry-id', entry.entryId);
 
@@ -235,6 +217,25 @@ function renderEntry(entry) {
   return $entry;
 }
 
+// Remove the entry by clicking the confirm button
+$confirmButton.addEventListener('click', function (event) {
+  var $entries = document.querySelectorAll('li');
+  for (var i = 0; i < $entries.length; i++) {
+    var entryId = parseInt($entries[i].getAttribute('data-entry-id'), 10);
+    if (data.editing.entryId === entryId) {
+      data.entries.splice(i, 1);
+      var entry = $entries[i];
+      entry.remove();
+      break;
+    }
+  }
+  $overlay.className = 'overlay hidden';
+  $modal.className = 'modal hidden';
+  data.editing = null;
+  handleView('entries');
+});
+
+// Change the page view
 function handleView(viewData) {
   data.view = viewData;
   for (var i = 0; i < $views.length; i++) {
